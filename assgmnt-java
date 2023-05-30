@@ -1,0 +1,45 @@
+
+package clint.side;
+
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.net.Socket;
+import java.util.Scanner;
+
+
+public class ClintSide {
+
+   
+    public static void main(String[] args) {
+     try
+     {
+       Socket st=new Socket("localhost",9979);
+       Scanner sc=new Scanner(System.in);
+       System.out.println("inter beverage code");
+       int BC=sc.nextInt();
+       System.out.println("inter number cups dispensed");
+       double cups=sc.nextDouble();
+       
+       //sending data to the server side
+       DataOutputStream dout=new DataOutputStream(st.getOutputStream());
+       dout.writeInt(BC);
+       dout.writeDouble(cups);
+       dout.flush();
+       
+       //reseving the data from the server 
+       DataInputStream din=new DataInputStream(st.getInputStream());
+       double bcude=din.readDouble();
+       double bname=din.readDouble();
+       double saler=din.readDouble();
+       System.out.println("the bavrege code is="+bcude);
+       System.out.println("the bavrege name is="+bname);
+       System.out.println("the sale return is+"+saler);
+       
+     }
+     catch(Exception e)
+     {
+         System.out.println(e);
+     }
+    }
+    
+}
